@@ -1,5 +1,5 @@
 export {
     MongoDB,
     MongoUsers
-} from "./dao";
+} from "./mongodb";
 
