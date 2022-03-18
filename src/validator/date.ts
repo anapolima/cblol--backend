@@ -13,7 +13,7 @@ class DateValidator
 
     private validate (_date: string): string
     {
-        const date: string = _date.trim();
+        const date: string = _date?.trim();
         const regex = /\d{4}-\d{2}-\d{2}$/;
 
         if (regex.test(date))
