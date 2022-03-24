@@ -29,7 +29,7 @@ class SendEmailService
 
         try
         {
-            this.sendEmail();
+            await this.sendEmail();
             this.status = {
                 code: Status.SEND,
                 message: "Email sent successfully!"
@@ -37,11 +37,6 @@ class SendEmailService
         }
         catch (err)
         {
-            if (err instanceof InternalServerError)
-            {
-                throw err;
-            }
-
             throw new InternalServerError({
                 detail: "Unable to send email",
                 message: err.message,
@@ -50,44 +45,22 @@ class SendEmailService
 
     }
 
-    private  sendEmail ():
-    Promise<IEmailStatus>
+    private async sendEmail ():
+    Promise<void>
     {
-        return new Promise( (res, rej) =>
-        {
-
-            const transporter = createTransport({
-                host: config.emailSender.host,
-                secure: true,
-                auth: {
-                    type: "oauth2",
-                    user: config.emailSender.email,
-                    clientId: config.oAuth.clientId,
-                    clientSecret: config.oAuth.clientSecret,
-                    refreshToken: config.oAuth.refreshToken,
-                }
-            });
-
-
-            transporter.sendMail(this.emailOptions, (err) =>
-            {
-                if (err)
-                {
-                    const result = new InternalServerError({ detail: err.message });
-
-                    rej(result);
-                }
-                else
-                {
-                    const result = {
-                        code: Status.SEND,
-                        message: "Email enviado com sucesso!"
-                    };
-
-                    res(result);
-                }
-            });
+        const transporter = createTransport({
+            host: config.emailSender.host,
+            secure: true,
+            auth: {
+                type: "oauth2",
+                user: config.emailSender.email,
+                clientId: config.oAuth.clientId,
+                clientSecret: config.oAuth.clientSecret,
+                refreshToken: config.oAuth.refreshToken,
+            }
         });
+
+        await transporter.sendMail(this.emailOptions);
     }
 }
 

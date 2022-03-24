@@ -98,11 +98,9 @@ class MongoUsers extends MongoDB
             }
 
             return this.users[0];
-
         }
         catch (err)
         {
-            console.error(err);
             throw new InternalServerError({
                 detail: "Unable to fetch users",
                 message: err.message
