@@ -7,6 +7,7 @@ enum ErrorType
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NOT_FOUND = 404,
+    CONFLICT = 409,
     UNPROCESSABLE_ENTITY = 422,
     INTERNAL_SERVER_ERROR = 500,
     SERVICE_UNAVAILABLE = 503
@@ -118,6 +119,19 @@ class ServiceUnavailable extends RequestError
     }
 }
 
+class Conflict extends RequestError
+{
+    constructor (message: object = { detail: "Conflict" })
+    {
+        super(ErrorType.CONFLICT, message);
+    }
+
+    send (res: Response)
+    {
+        return super.handle(res, this);
+    }
+}
+
 export {
     BadRequest,
     Unauthorized,
@@ -125,5 +139,6 @@ export {
     NotFound,
     UnprocessableEntity,
     InternalServerError,
-    ServiceUnavailable
+    ServiceUnavailable,
+    Conflict
 };

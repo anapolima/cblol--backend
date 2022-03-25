@@ -7,3 +7,5 @@ export { IPagination } from "./pagination.interface";
 export { UsersFields } from "./users-fields.enum";
 export { IListUsersDataOptions } from "./list-users-data-options.interface";
 export { IListUsers } from "./list-users.interface";
+export { TokenType } from "./toke-types.enum";
+export { IQueryParams } from "./query-params.interface";
