@@ -6,8 +6,8 @@ import {
     UserNameValidator,
     UserPasswordValidator,
     UserTypeValidator,
-} from "./";
-import { IUser } from "../model";
+} from ".";
+import { IUser } from "../models";
 
 class UserDataValidator
 {

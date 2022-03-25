@@ -1,9 +1,9 @@
 import { BadRequest, InternalServerError } from "../core";
-import { EncryptPasswd, TokenGenerator } from "../helper";
+import { EncryptPasswd, TokenGenerator } from "../helpers";
 import { IEmailStatus, SendEmailService } from "./send-email";
-import { IUser, UserModel } from "../model";
-import { MongoUsers } from "../client";
-import { UserDataValidator } from "../validator";
+import { IUser, UserModel } from "../models";
+import { MongoUsers } from "../clients";
+import { UserDataValidator } from "../validators";
 import { config } from "../config";
 
 class CreateUserService

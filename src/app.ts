@@ -3,7 +3,7 @@ import cors from "cors";
 import express from "express";
 
 const app = express();
-import routes from "./route";
+import routes from "./routes";
 
 const whiteList: string[] = config.whiteList;
 
