@@ -80,22 +80,7 @@ class MongoUsers extends MongoDB
 
             this.users = await this.Users.aggregate([ ...this.query ]);
 
-            try
-            {
-                await this.disconnect();
-            }
-            catch (err)
-            {
-                throw new InternalServerError({
-                    detail: "Unable to disconnect from database",
-                    status: "Data fetched successfully",
-                    data: this.users,
-                    itemsPerPage: this.listUsersDataOptions.pagination?.itemsPerPage ||
-                        config.pagination.users.itemsPerPage,
-                    pageNumber: this.listUsersDataOptions.pagination?.pageNumber || config.pagination.users.pageNumber,
-                    message: err.message,
-                });
-            }
+            await this.disconnect();
 
             return this.users[0];
         }
