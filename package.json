@@ -1,9 +1,8 @@
 {
   "name": "cblol--backend",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/anapolima/cblol--backend",
-  "author": "Ana Paula Oliveira de Lima <anaolilima88@gmail.com>",
+  "author": "Ana Paula Oliveira de Lima <anaolilima88@gmail.com>, Thalles Guilherme Barboza Garbelotti <thallesgarbelotti@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@types/cors": "^2.8.12",

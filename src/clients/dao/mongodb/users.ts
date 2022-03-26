@@ -5,7 +5,7 @@ import {
     PaginationSort,
     UserModel,
     UsersFields,
-} from "../../../model";
+} from "../../../models";
 import { InternalServerError, ServiceUnavailable } from "../../../core";
 import mongoose, { PipelineStage } from "mongoose";
 import { MongoDB } from ".";

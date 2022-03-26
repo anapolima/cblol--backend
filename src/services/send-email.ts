@@ -1,4 +1,4 @@
-import { IMailOptions } from "../model";
+import { IMailOptions } from "../models";
 import { InternalServerError } from "../core";
 import { config } from "../config";
 import { createTransport } from "nodemailer";

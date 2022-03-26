@@ -1,6 +1,6 @@
 import { InternalServerError, StatusCreated } from "../core";
 import { Request, Response } from "express";
-import { CreateUserService } from "../service";
+import { CreateUserService } from "../services";
 
 class CreateUser
 {
