@@ -2,12 +2,11 @@ import { IUser } from "../models";
 
 class UserTypeValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public type: number;
 
     public constructor (_type: string)
     {
-        this.errors = {};
         this.type = this.validate(_type);
     }
 

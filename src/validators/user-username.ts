@@ -2,13 +2,12 @@ import { IUser } from "../models";
 
 class UserUsernameValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public username: string;
     private readonly usernameRegex = /^[0-9A-Z\s]{3,16}$/i;
 
     public constructor (_username: string)
     {
-        this.errors = {};
         this.username = this.validate(_username);
     }
 

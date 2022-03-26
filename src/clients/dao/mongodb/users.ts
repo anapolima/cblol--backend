@@ -21,6 +21,29 @@ class MongoUsers extends MongoDB
     private sortBy: string;
     private query: PipelineStage[];
 
+    private readonly filters = {
+        document: (_document: string) =>
+        {
+            this.match[UsersFields.DOCUMENT] = _document;
+        },
+        email: (_email: string) =>
+        {
+            this.match[UsersFields.EMAIL] = _email;
+        },
+        username: (_username: string) =>
+        {
+            this.match[UsersFields.USERNAME] = _username;
+        },
+        id: (_id: string) =>
+        {
+            this.match[UsersFields._ID] = new mongoose.Types.ObjectId(_id);
+        },
+        confirm_email_code: (_confirm_email_code: string) =>
+        {
+            this.match[UsersFields.CONFIRM_EMAIL_CODE] = _confirm_email_code;
+        }
+    };
+
     public constructor ()
     {
         super();
@@ -35,18 +58,7 @@ class MongoUsers extends MongoDB
 
             const inserted = await this.Users.insertMany(_clients);
 
-            try
-            {
-                await this.disconnect();
-            }
-            catch (err)
-            {
-                throw new InternalServerError({
-                    detail: "Unable to disconnect from database",
-                    status: "Data inserted successfully",
-                    message: err.message,
-                });
-            }
+            await this.disconnect();
 
             return inserted;
         }
@@ -80,22 +92,7 @@ class MongoUsers extends MongoDB
 
             this.users = await this.Users.aggregate([ ...this.query ]);
 
-            try
-            {
-                await this.disconnect();
-            }
-            catch (err)
-            {
-                throw new InternalServerError({
-                    detail: "Unable to disconnect from database",
-                    status: "Data fetched successfully",
-                    data: this.users,
-                    itemsPerPage: this.listUsersDataOptions.pagination?.itemsPerPage ||
-                        config.pagination.users.itemsPerPage,
-                    pageNumber: this.listUsersDataOptions.pagination?.pageNumber || config.pagination.users.pageNumber,
-                    message: err.message,
-                });
-            }
+            await this.disconnect();
 
             return this.users[0];
         }
@@ -141,19 +138,7 @@ class MongoUsers extends MongoDB
                 }
             });
 
-            try
-            {
-                await this.mongoose.disconnect();
-            }
-            catch (err)
-            {
-                throw new InternalServerError({
-                    detail: "Unable to disconnect from database",
-                    status: "Data updated successfully",
-                    message: err.message,
-                });
-            }
-
+            await this.mongoose.disconnect();
             delete this.updateFields.password;
 
             return [ this.updateFields ];
@@ -184,34 +169,15 @@ class MongoUsers extends MongoDB
             this.match.deleted_at = { $ne: null };
         }
 
-        if ( this.listUsersDataOptions.filters?.document)
+        Object.keys(this.listUsersDataOptions.filters).forEach((_field: string) =>
         {
-            this.match[UsersFields.DOCUMENT] = this.listUsersDataOptions.filters.document;
-        }
-        if (this.listUsersDataOptions.filters?.email)
-        {
-            this.match[UsersFields.EMAIL] = this.listUsersDataOptions.filters.email;
-        }
-        if ( this.listUsersDataOptions.filters?.username)
-        {
-            this.match[UsersFields.USERNAME] = this.listUsersDataOptions.filters.username;
-        }
-        if ( this.listUsersDataOptions.filters?.id)
-        {
-            this.match[UsersFields._ID] = new mongoose.Types.ObjectId(this.listUsersDataOptions.filters.id);
-        }
-        if ( this.listUsersDataOptions.filters?.fullname)
-        {
-            this.match[UsersFields.FULLNAME] = this.listUsersDataOptions.filters.fullname;
-        }
-        if ( this.listUsersDataOptions.filters?.birthdate)
-        {
-            this.match[UsersFields.BIRTH_DATE] = this.listUsersDataOptions.filters.birthdate;
-        }
-        if ( this.listUsersDataOptions.filters?.confirm_email_code)
-        {
-            this.match[UsersFields.CONFIRM_EMAIL_CODE] = this.listUsersDataOptions.filters.confirm_email_code;
-        }
+            const setFilter = this.filters[_field];
+
+            if (setFilter)
+            {
+                setFilter(this.listUsersDataOptions.filters[_field]);
+            }
+        });
 
         switch (this.listUsersDataOptions.sortBy)
         {

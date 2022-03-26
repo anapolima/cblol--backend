@@ -2,14 +2,13 @@ import { IUser } from "../models";
 
 class UserNameValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public fullname: string;
     private readonly nameMaxLength = 80;
     private readonly nameMinLength = 3;
 
     public constructor (_name: string)
     {
-        this.errors = {};
         this.fullname = this.validate(_name);
     }
 

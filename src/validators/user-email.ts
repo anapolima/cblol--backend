@@ -2,12 +2,11 @@ import { IUser } from "../models";
 
 class UserEmailValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public email: string;
 
     public constructor (_email: string)
     {
-        this.errors = {};
         this.email = this.validate(_email);
     }
 
