@@ -11,7 +11,7 @@ import { IUser } from "../models";
 
 class UserDataValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public user: Partial<IUser>;
 
     private readonly userFullnameValidator = UserNameValidator;
@@ -24,7 +24,6 @@ class UserDataValidator
 
     public constructor (_user: Partial<IUser>)
     {
-        this.errors = {};
         this.user = this.validate(_user);
     }
 

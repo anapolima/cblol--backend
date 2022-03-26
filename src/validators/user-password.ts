@@ -2,7 +2,7 @@ import { IUser } from "../models";
 
 class UserPasswordValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public password: string;
 
     // eslint-disable-next-line max-len
@@ -10,7 +10,6 @@ class UserPasswordValidator
 
     public constructor (_passwd:  string)
     {
-        this.errors = {};
         this.password = this.validate(_passwd);
     }
 

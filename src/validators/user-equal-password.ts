@@ -2,12 +2,11 @@ import { IUser } from "../models";
 
 class EqualPasswordValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public confirmPassword: string;
 
     public constructor (_passwd: string, _confPasswd: string)
     {
-        this.errors = {};
         this.confirmPassword = this.validate(_passwd, _confPasswd);
     }
 

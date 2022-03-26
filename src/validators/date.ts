@@ -2,12 +2,11 @@ import { IUser } from "../models";
 
 class DateValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public date: string;
 
     public constructor (_date: string)
     {
-        this.errors = {};
         this.date = this.validate(_date);
     }
 

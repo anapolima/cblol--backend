@@ -2,7 +2,7 @@ import { IUser } from "../models";
 
 class UserDocumentValidator
 {
-    public errors: Partial<IUser>;
+    public errors: Partial<IUser> = {};
     public document: string;
 
     private readonly cpfRegex = /\d{3}\.\d{3}\.\d{3}-\d{2}$||\d{11}/;
@@ -10,7 +10,6 @@ class UserDocumentValidator
 
     public constructor (_document: string)
     {
-        this.errors = {};
         this.document = this.validate(_document);
     }
 
